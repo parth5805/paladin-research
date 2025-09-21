@@ -1,0 +1,587 @@
+all right Steve why don't we get started um thanks everybody for joining us for this webinar introducing paladim
+programmable privacy for evm which is a new LF decentralized trust lab I'm going
+to kick it over to Steve cini our CEO to to walk you through some thoughts
+here all right well great great to see everyone here some
+familiar names as well as some new names welcome everyone uh very excited to take
+you through a 101 introduction to Paladin as Mark said a brand new project
+um trying to solve a very hard problem uh in the evm
+space and the flow the flow of this I I'll take you through an overview and
+then we'll sort of dive into Paladin and and give you the Whistle Stop th tour
+through that and then really want to tie it together with an example um and we will open it up for
+Q&A at the end uh so I won't necessarily
+be monitoring that closely throughout the the presentation but we will uh
+Circle back to everything towards the end so let's let's jump
+in um you know and and just by way of introduction the ethereum virtual
+machine has a lot going on it's a very vibrant ecosystem um you know if you just look
+at on the right hand side of the slide everyone knows ethereum and all the
+great things that are happening within the ecosystem whether it's defi or you
+know emerging standards like erc's um uh the ubiquity of solidity
+skills in the marketplace and and on and on and actually on the institutional
+side there are very ious uh studies and surveys and they all show you know quite
+quite a large amount of uh activity uh on the institutional side as well for
+ebm um but when you ask uh companies what the largest barrier for them is
+within the evm space or what's one of the biggest challenges if you ask them to rank those
+challenges privacy comes out number one uh at at the top um and so you know
+clearly vanilla evm has some great applications uh but there are a whole
+bunch of use cases that uh need a level of privacy that just isn't there uh in
+out out of the box and so that's where Paladin sort of
+fits in uh but before we we um get into Paladin I want to introduce an example
+to you to explain um you know what privacy actually means when we just use
+use that term um and this example we're going to come back to throughout the
+presentation to to drive home some points uh take the example of a bond um
+and down here in the the gray box there is an evm blockchain and this could be
+any evm blockchain it could be a permission based Su chain that you've set up it could be main net ethereum it
+could be a rollup it could be a layer two any evm blockchain right and on that
+blockchain you have um coded up a bond
+um this and it could be a very sophisticated Financial instrument right with different uh mechanisms
+subcontracts uh escros Etc that that all sort of
+collectively comprise the bond right and that's great there it is on on the
+evm um but you know what does that mean for for the organizations or individuals
+that can connect to this blockchain the default for an evm blockchain is what's called World State
+and therefore World visibility meaning um all these different parties
+and in the case of the life cycle the bond will highlight a few again actually very simplistic view of the life cycle
+of the bond but there's an issuer who actually um creates or issues the the
+bond itself the custodian who um holds
+bits of the bond on behalf of the investors um and for all of those these
+uh players they can see everything so sorts of the type of data that is just visible you know the fact that uh
+investor a is sort of at a particular wallet address and that they own a particular you know number of units of
+the bond how much they paid for those units um all of these sorts of of data
+that today in the world um you know if you are building aond distribution system from scratch
+just on a you know whatever Tech you wouldn't make all of that data visible for all the different parties right
+connecting into the system um that maybe there is some data
+though that that should be visible to everyone you know things like how many units are in the bond overall and how
+many are still available so you sort of have this mismatch of of types of data
+of categories of sensitivity of that data um and and just using sort of
+vanilla methods that exist and the the m space you end up over disclosing on that
+data and so this is in essence when we talk about privacy and the Privacy
+problem that a number of Enterprise use cases in particular have with the evm
+you can kind of get a sense for for really you know what what that
+means so then what is the promise of Paladin so
+the promise of of a tool uh like Paladin
+that solves the Privacy problem is essentially that each participant will
+only see the intended information for them you could the idea is the the
+blockchain's still there right same blockchain but instead of building the vanilla open Bond we buil something that
+for now I'm calling a private Bond and um you know by um running the
+Paladin um client or the Paladin node each of these parties can um understand
+bits about this private Bond right but only the bits that are relevant to them
+so the issuer for example can see just D bits of data about the life cycle this
+Bond pertaining to its issuance while the C custodian may need specific
+subscription details related to its investors as an individual investor I
+can see just my subscription for my uh bits of the bond and you know these
+investors over here who don't own anything in the bond can only see the public data so you can almost think
+about this like running the Paladin client and putting on the Paladin goggles right and through those goggles
+you can see you bits of this private Bond come to life for you the bits that
+are programmatically defined um as relevant to your
+role so that's the promise of you know how um you know I'm claiming it's going
+to work so as we go through this uh hopefully you'll get a sense for how
+this actually works works and practice at least at a 101 level
+today so to take you through Paladin I want to do it in three parts um first
+let's start with the tokens um themselves so we're calling these private
+tokens um you know the first thing to understand is everyone's heard of you
+know the ERC 20s and the 721s great understand that these are very
+very minimal un uh interfaces with just a few functions defined and so
+what happens in practice um is there's either uh as you're building
+your token you're either customizing you know these very basic starting points or you're extending them
+uh and you may even be using uh starting from a much more sophisticated uh
+interface depending upon the the asset that you want to to Define and how complex that asset is so there are other
+standards out there uh for for more complex assets that again inherit from
+these very simple bases but then add on many many different um other functions
+so that's kind of how it works today uh and the the goal of these private tokens
+that you know at least for now we're calling the zrc tokens um is we want to maintain that
+same level of programmability we want to conform um to those simple interfaces
+and allow you know in just the same way that you can sort of compose and build on top um you know we want you to be
+able to do that with these uh private uh tokens as well so goal compatible fully
+programmable uh so maybe that's what they look like from the outside but when you actually look on the inside of the
+token you'll see something quite uh dramatic ically different um than than
+what's there today um so so now we're sort of looking inside of the
+evm and if you're familiar with how it works there's you know what's called a
+the estate machine that you can think of as an account balance um sort of State
+machine um and you know the data that's on chain U is everything that you store
+on chain right so the the balances of of the accounts the current ownership the
+lineage of that the state history and so forth but when you look on the inside of the the zrc token it is fundamentally um
+a utxo based State machine and uh the the technical
+terminology here there set of commitments to to private States um now
+this is not novel to Paladin so remember there's been a long lineage of of
+different privacy uh approaches techniques um over the last number of
+years and um you know off the top of my head you know 80 90% of those leverage a
+utxo uh model for the state machine there there are very good uh reasons for
+that um and if if you happen to have heard the term utxo and you think of
+Bitcoin um and then you you hear evm or ethereum and you think account balance
+you going whoa wait how how can you do a what do you mean utxo this is ethereum
+remember the evm is a fully programmable
+language so you could write any sort of data structures um practically um and
+any sort of business logic that you want in side of that so of course what we can do is build a particular State machine
+for a given contract right we can Define what that state machine is um and the
+case of these private tokens um you know we can build a utxo state machine uh for
+tracking the state of it and you know we can further uh
+decompose privacy down into three attributes um one is the the level of
+anonymity uh so uh can you see who has submitted a transaction the second
+element being confidentiality can you see the transa transaction details uh of the payload
+itself and then history masking can you see historical details um and in the case of our our
+zrc tokens that we've defined you can achieve privacy for all three of these
+uh privacy attributes and these privacy Elements which is very uh important to
+be able to accomplish that uh again depending upon the specific use case
+that that you're building for uh so the next thing to know about
+these privacy tokens is there's actually more than one um implementation of them
+sitting alongside one another inside of the the Paladin uh
+framework um so I'll introduce two of those to you on
+the slide and a third one a bit later uh but the idea is uh Paladin is a
+framework so uh the community could choose to implement more of these
+privacy domains uh each with their corresponding privacy token and that's
+great Paladin's designed to support uh multiple different uh privacy uh types
+uh architectures all running side by side so it's sort of this in addition to
+being a privacy solution it's sort of a a meta Solution that's going to evolve
+as you know privacy technology evolves and and and
+progresses so I use the term domain just a second ago there you notice uh Paladin
+what a paladin domain is is a complete a full stack
+architecture uh of of a a privacy architecture um your
+organization can play one or more role within a domain um your client can participate in
+many different defined privacy domains and in the future there could be
+more of these privacy domains defined um at a high level uh just introducing
+the first two and I've got a more detailed view of of these later on in the deck
+um the the noo do domain um is uh an
+issuer backed uh domain um and the idea with
+the issuer backed is a trusted party sits offchain and signs um a a a
+pre-submission uh transaction uh that sort of authorizes um uh a party to to do
+something uh this is a known pattern in the Enterprise space uh it's been
+implemented before it's well tested um and indeed multiple different
+communities have have an implementation of this so Paladin brings an
+implementation to the evm of this known pattern pattern it's in the box you can
+define a notto domain uh and be Off to the Races there is one special party called
+an issuer that plays a special role um in the life cycle of these tokens by
+contrast there's no special party in the zero knowledge or Zeto token um uh at least no special party
+for all transactions within the domain um and in
+in this case um you know if you're familiar with zero knowledge at all uh
+involves generating complex mathematical proofs um for for transactions that go
+on chain and if you're thinking okay that's great there's multiple of these domains
+but now I have to sort of choose between them um when I'm implementing my use
+case um that's definitely true and there are the reality is there
+are multiple factors that you'll need to take into account uh as as you're
+designing your use case just like with all other forms of engineering um and uh
+it's important to note it doesn't have to be either or uh you can actually use these together to form different legs of
+a workflow and I'll show you that in our bond example in a little bit so that's really cool uh they're
+composable um uh and uh this unlocks even more possibilities
+for you as you're building out your use cases so then let's sort of reflect a
+little bit or step back and think about the trust model and the data model and how all this fits together of course you
+can still use good old erc's and plain sort of vanilla versions of those and
+they're great in in um you know because they provide a trustless model but the
+reason you trust it is because you see everything about it and that's great in defi right where there's no way you
+don't know who the other party is you don't you don't care um and you establish trust by seeing everything on
+chain right and and that's that that's it and that's great for a certain you
+know set of use cases by contrast the the Noto domain is sort of a hybrid
+trust model um I trust I trust it because I trust uh the
+issuer um and you see the footnote there at the bottom of the slide which is
+which is uh very important um you know you can think of this as not requiring
+you to trust the counterpart in the transaction but you do need to trust that special party uh the issuer and
+what we've seen in a lot of Enterprise use cases is this lines nicely because in the regulated space there is a party
+that's regulated um to perform a particular role role um and they're
+they're governed and by by law and so forth to perform that that service and
+therefore you do intrinsically trust them to to do that job um and of course what's uh the data
+onchain is this private utxo State transition chain and then offchain the
+issuer uh is holding uh a bunch of State uh in their Noto domain that
+running and then finally uh the zero knowledge based zto uh private token um
+it's trustless what you're trusting is you know ZK fancy math basically um and
+uh it's we it's important to note for the zto domain uh you can run in either
+private or audit in mode this means uh you can authorize an auditor to have a
+special View in uh or you can run it in private mode where everything's sort of
+a bilateral uh only between exactly two
+parties okay so let's keep moving along um and now I want to go into the second
+part that was that was again the the private tokens a quick introduction to those I'm going to transition into the
+second part of Paladin which is to talk about multi-party workflow and if you're going multi-party
+workflow that's interesting how does that fit into
+privacy let's take a look at um you know thinking about privacy as a
+stack and remember in the tech space you can always think about things as a stack
+there's always a stack um and so thinking about um some of the
+different layers we've seen uh in in the Privacy stack in particular think with
+respect to Enterprise use cases that we've seen um you can kind of decompose
+that stack into the layers that we've Illustrated on the Le hand side here
+where it's the evm so of course there's on you know so-called onchain elements
+um that is what's in the smart contracts running on that um evm kind of Base
+Ledger if you want to call it not the base blockchain but the bottom layer the the evm chain itself again any
+evm but then offchain uh or sitting above that up the stack uh you see you
+know there are software development kits that exist uh to program to to the
+evm uh to the private tokens and um in
+all cases that we've seen for for privacy implementations there are um other bits
+further up the stack uh so there's a private data that's held by one or more
+parties offchain whether that's zero knowledge that's the case um whether
+that's a not uh an issuer backed uh pattern that's the case um whether
+that's other forms of sort of offchain hash pinning or other things we've seen in Prior Generations that's also the
+case um and interesting in for for Enterprise use cases as you get up the
+stack you see that there's also this kind of workflow layer so you know Real
+World um assets and um Enterprise use cases there's a lot of coordination
+that's happening there's a lot of workflow sort of before during and after what actually goes on
+chain uh and we found quite a lot of the the um custom code
+is actually in this this multi-work flow layer and indeed
+um the community has had a go at building uh a tool for that if you're
+familiar with Tes that existed with Corum and and Basu in those communities that was um essentially a an
+a a um it was called privacy groups or private smart contracts but it's sort of
+of this this uh layer at the top of the Privacy stack uh for data exchange and
+and for coordination among smaller groups than than those uh you know
+subsets of of participants in the broader uh blockchain again we've Loosely just to
+help you map if you're familiar with other um sort of tools out there this is
+not about um any direct comparisons or calling anyone else is baby ugly or
+anything like that um ju we're just trying to help people sort of draw a
+conceptual map in the way that we're thinking about it and help you to bridge your thinking um I think the point here
+is that especially some of the the projects that that we've either worked in
+directly um in Prior generations of evm tech um Andor are kind of familiar with
+we see them as really you you know focusing on certain areas or certain layers of this privacy stack the goal
+with Paladin was to try to encapsulate this entire stack all sort of in in a
+single node so that as an evm developer you don't get these nasty
+surprises where say you've picked up you know a shiny ZK
+implementation uh and then you realize oh like 80% of my code is actually in
+this workflow layer I I'm on my own right for that or
+yeah um there is a protocol here but there's a ton of programming you know to
+actually make this work or I need to figure out how to manage all of my own runtimes and integrate them all together
+right um same thing you could draw comparisons in in other directions uh
+but with Paladin we brought all of those together um sort of in a in a single
+tightly bundled uh easy toorun client and so moving on into this uh
+workflow layer then um uh you know again we found actually this is an analysis of
+C some cido projects more than 90% of the the the the business logic
+that makes up sort of an Enterprise token or how people are thinking about their uh token actually existed in this
+workflow layer so it was really important to us feeling like Paladin is
+a Next Generation approach you know standing on the shoulders of the learnings and some of the other projects
+we wanted to really push the ball forward at this layer um you know and if
+you're familiar with tesra you know that a project has been explicitly deprecated um and so we in particular
+you know looked at tesra uh we we've personally worked with that project a
+lot we wanted to really push the the um the the goalpost forward quite a bit uh
+with Paladin and you know again the idea here at a high level is you know these two
+organizations they're interacting through this private token um but there's a bunch of um uh communication
+data um you know deterministic business business logic that they want to execute
+between themselves that maybe doesn't necessarily fit naturally um in the on
+onchain Smart contract maybe that's for efficiency sake maybe there's a large
+amount of data maybe it's you know the the nature of of the the data some
+combination of all of that and so I want to introduce a third p palisin uh Paladin domain to you
+called p p and pente means five tesra means four so this is kind of uh the next
+generation of you know what was called tessora smart contracts um or you could think of it
+that way and that is the pente Privacy group um and uh within the the pente
+domain uh you can set up a privacy group you can have hundreds thousands tens of
+thousands of these um you can create on every smart contract um and you can deploy um
+anything uh it's an evm so you get a you get a whole evm uh but it can also be quite
+short-lived um uh so the scope of the evm could be you know a single contract
+it could be a single transaction uh and we've built these these
+EVMS uh in a super super efficient uh and scalable way if you're familiar with
+for example AWS Lambda or I think an Azure they're called functions um you know the idea that um
+you have this very scalable architecture where you have a runtime engine but it's not active um and it
+sort of if you send something to it it'll wake up performance do its job and
+then go back to sleep you know we've brought that Concept in and the thing
+that does the job is an evm and so that's that's what that's
+what pente is it's this super scalable way to have these almost like ephemeral
+EVMS that are doing processing for you and you can define a group of other
+paladins out there who uh will participate in this privacy group the
+laws and rules of of evm um of just the evm bit uh exist uh
+so as far as you know each one is a whole state World in and of itself all the power of solidity programming for
+example is that your fingertips this is familiar for you as as a
+developer and if you're thinking is this sort of like a roll up yes and no um so
+what we've done here is there's one for one uh uh State sort of flowing through
+to uh updating the the private token down at the base ledger so this means
+that the the core evm here sort of at the bottom of the screen is the one
+governing everything if it accepts or rejects a transaction ultimately defines
+what's happening in the world uh but you have this endorsement um flow where the pal node
+uh submits through sort of rolls these transactions through down into uh the
+evm um you know whereas by contrast the rup May sort of bundle up hundreds or
+whatever of transactions into a single um flow so there are pros and cons to
+that um that may be in the 2011 or we can get into it in the Q&A um but you
+have a um you know conceptually a super super scalable way to do evm
+processing you can get as private as you want in these groups you can Define as many of them as you want um and it adds
+this whole extra Dimension to how you build out um your use cases on an
+endtoend basis so then looking at the the Privacy stack as a whole you know we've given
+you enough of a Whistle Stop Tour by now to map in the different layers you can
+see our our private tokens are RC's um help us with the the onch chain
+aspects in the um the evm of your choice the global evm down at the bottom uh
+there are some other um bits that come with Paladin like an atomic settlement a contract as well and of course you can
+build your own smart contracts obviously and those become part of the the solution as we move up the stack the
+Paladin API gives you complete uh DK and uh programming experience for all of
+these domains and perhaps more in the future as they come um and then as you get into things like workflow and
+private uh data exchange you have this amazing sort of NextGen uh pente
+workflow engine that feels very evm native solidity uh and is a very
+powerful way uh for you to build the rest that 90% that we've seen in many
+projects of the of the business logic in a much more a multi-party decentralized
+true to ethos of blockchain way of building that what we've seen in many number of projects sort of compromise on
+uh before so then you know showing this in a maybe a more consumable diagram here
+down here is your your evm still managing Global State um and and you
+know at a transaction privacy level you have you know zto based zero knowledge
+uh tokens you have notto based issuer backed or notorized
+tokens um and then the ability to create all of these privacy groups as many of them as you want Paladin's providing all
+of these and of course you can always program any vanilla evm and mix and
+match that in as well as part of the overall uh solution that you
+build so sort of moving on to the third part of of this I want to um now take
+you through a little bit just on the Paladin client um and some of the architecture
+of Paladin itself I've I've at various points I've referred to it as a toolkit
+a framework a nose um help us figure out the right word
+that one's very very tricky uh as you get to know Paladin better uh but I
+think it's important distinction this is hundreds of thousands of lines of code this is a complete
+runtime this is something that you can take and run anywhere it's super super
+lightweight is really important to us it's all bundled into actually a single
+uh process um so it's very very efficient um and so it feels very
+lightweight to get started as a programmer it's very low burden operationally run
+it uh but is a very powerful engine uh in Paladin it's complete so you um you
+are configuring a a runtime engine rather than building one from an SDK right
+that's a key point I want to make clear with Paladin you can get started today
+here's here's a view of what the the client looks like um there are a number
+of very important components frankly there are whole com whole companies just
+built around you know one of these components there are multiple of these in the Box Paladin has probably the most
+sophisticated transaction manager that's ever been built in the space for the evm that's my opinion very
+sophisticated um is actually built on seven years of of learnings in multiple
+generations for cido completely necessary as you understand how these private tokens work to have a very
+sophisticated brain in this backing that brain is a robust indexer if you're
+familiar with utxos you know that uh indexing um is very important uh so the
+Paladin client just does all of that has very robust reliable connectivity built
+into it into the blockchain not even on this picture and then has a wallet a
+vault uh because these private uh it's it's no longer just like simple ethereum
+keys that we're talking about here uh things like zero knowledge tokens have
+you know baby Jubjub and and whatever SE seven different things that I don't even
+remember the name of all of them uh you know sophisticated keys right multiple
+kinds um this this Vault this wallet um
+holds all of those and the the private data the corresponding private data and
+state so this client's very important um uh you it it's it's holding all of this
+data so that when you put on the ploud and goggles as I said earlier you can see exactly what you're meant to see and
+then of course it's running all the privacy domains that are defined for for the token or tokens that you are
+interacting with um and it's all the runtimes uh are doing their jobs as well
+corresponding to that and then of course on chain there are the private tokens themselves um there is a registry as
+well that you can uh Implement for your use case so that other pal like paladins
+can find each other um which maybe we'll talk a bit more about uh in the example
+and then also the ability to to for Atomic settlement which is a huge deal it's a
+huge wow I'm going to emphasize this in the bond scenario when I go back to it
+in a minute in a minute but these tokens all existing on the same
+evm um can uh you can create very complex Atomic transactions
+uh involving these tokens there's a lot more to Paladin
+than what I just covered this is proof that that's the case come back for later
+um uh webinars look for look into the the
+Linux Foundation decentralized trust Community uh join those meetups to go to
+the 2011 301 level as a advertisement or reminder we are going around the world
+to major cities over the next three to six months doing all day Paladin
+workshops you can get your hands on go really deep there's a lot um there's a
+lot lot uh involved in this Paladin runtime uh Beyond this 101
+view as far as atomic settlement goes I want to talk about that for a minute
+here so you know go back to the the the the global evm sort of Base Ledger
+that's running here this could be main net ethereum could be Basu could be your
+your own rollup as a service could be layer 2 whatever but on this
+evm there are multiple uh privacy tokens as well as vanilla open tokens
+whatever you can create a single contract right that that perform forms a
+single transaction that's committing States uh that's you know agreeing to
+activities that are happening in an arbitrary number
+of Paladin privacy domains so in this case you know Bond a
+bond transfer is happening in leg one um and uh that the the issuer is
+being notified or maybe has some approval in leg two um a subscription is happening in
+leg three a payments happening in leg four um these all can exist in their own
+privacy bubbles um programmed specifically to your workflow and use case um and they
+all can either succeed or fail together right so there's no need for
+compensating transactions two-phased commits um etc etc that sort
+of very very complex world that you get into when you when you don't have true
+Atomic settlement um you know these these things they all succeed or they all fail
+right and that allows you to Pro think about blockchain programming
+fundamentally differently right than than you perhaps you've had to do uh up
+up till now and it you're not trading off the sort
+of classic full visibility you have these privacy bubbles so this is really
+in a nutshell the AHA the sort of the big the big wow that Paladin makes
+possible for you in mapping your own use case right make it make it five times
+more complex like this same principle Still Still applies
+Paladin is modern software it's cloud ready it's uh kubernetes based very easy
+to deploy and manage comes with operators all the goodies that you'd expect for kubernetes Native
+software um it comes out of the box with a bunch of samples uh a way to um you
+know set up little baso chains if you want to you know program there for from an evm
+perspective um it's a very very developer friendly piece of software
+nice UI very clean sort of Json RPC interface to program against evm native
+evm feel etc etc Enterprise graded the architecture and design of it um uh and
+is very very scalable as well so I promised a a a a quick deeper
+look um at some of these um the the individual tokens again this is more a
+teaser for like the 2011 level um and these will be available as a part of the
+content that in the community there's a bunch more in the docs that you can read as well beyond what we're getting into
+today but here's a picture of the zto zero knowledge backed tokens and um a
+example in an example of sort of what the price utxo state is and how that
+flows through uh onto onto the evm similarly this is a more detailed view
+of noo and the notorized utxo um and how those um existing
+onchain States uh move forward in the utxo model into new onchain States as
+well and then you know the third domain here is uh pente the Privacy groups
+again a more detailed View lots to dig into um in this architecture as well of
+how endorsement Signature Collection all of that happens um and how those um
+states are committed or rolled up on onto um the the
+evm so I promised you know last thing I'll cover and then we'll um you know
+take a take a few questions in the in the Q&A I promise to go back to the bond
+example so let me do that here so remember on the left hand side the the
+initial example the vanilla Bond all the data open everyone can see everything
+good for certain use cases but not for others the promise with Paladin where you can create this you know still the
+same evm blockchain still fully in control of this uh decentralized
+implementation of a bond um all of that's true but by running uh Paladin
+client uh that gives you sort of the Paladin goggles with the wallet and the indexer and all the integrating
+components you can build a private Bond uh and that and with that private Bond
+these parties will only see the bits of the data they're supposed to see so let's step through that bit by bit so
+over here on the right hand side I'm going to start I'm going to build this out you know first of course instead of
+our vanilla ERC we're going to start with our zrc token something that we
+provide out of the box with Paladin um and then you know that we can
+decompose this um into an atomic settlement because we're going to use
+multiple different privacy domains working together each one to its strength and we're we're also can have
+you know a vanilla part of this Bond as well where there is public data and the public data is only the data we
+want to Define to be public so for example you know we can tell everyone
+that there are 900 units of this Bond and 300 available and because it's part of this contract and the way that we've
+built it it will automatically update as units of these Bond are bought and sold
+in a in a private and in private bits of the contract and so this sort of public
+data will mirror what's happening inside of the private parts of the
+token so bonds have issuers that aligns very nicely with an issuer backed um uh
+domain so let's define a Noto domain and um so we're sort of going to
+further decompose this Bond and and break out uh bits of the logic that deal
+with the issuer and we're going to stick them inside of a noo domain and then of
+course this issuer has access to the issuer domain or it operates the issuer
+domain and so the issuer can see issuance related data right but the
+other parties are not seeing this issuance related data because they're not in this Noto
+domain let's define some some pente domains as well because we have all
+kinds of workflow as we go through the life cycle of this Bond um and we need
+to we need to involve subsets of the participants at different steps along
+the way let's create privacy groups for those again let's decompose let's pull
+out bits of of the vanilla Bond and let's put them inside of a privacy group
+notice inside this privacy group we can now you know program fully vanilla ERC
+that's totally fine because it's running on this evm these ephemeral EVMS inside
+of the pente it's a full evm it's a full world but the only parties inside of
+this world are the issuer and the custodian and in this privacy group um
+the what we're maintaining is the investor registry so these parties are
+authorized to to know about this sort of information and um they will do so
+inside of this privacy group let's create another privacy group to handle
+an individual subscription and we can do this on a per subscription basis so
+investor a wants to buy something great let's do that inside of a privacy group
+so that only they and the custodian know about it um and so for this this piece of data
+um you know the fact of how much they're paying and the number of units that they've achieved uh or or purchased are
+only available to those two parties inside of this group and I could go on and on I could
+actually create for example not in this picture a uh a zedo uh zero knowledge
+based cash token right um that works out really well for cash while using the a
+notto notto uh issuer backed uh token for the overall backbone of the bond
+itself I could do that and I could still maintain Atomic set settlement or I
+could accept payment through a stable coin right that's that's a vanilla coin that's just available uh open on um
+that's on this evbm all of that's possible again very simple view of a
+bond but hopefully this illustrates the concept of how Paladin can be used to
+build real world assets you know complex um Enterprise workflows using
+the different tools at your disposal to create extremely
+programmable uh implementations and a final thought on top of this Atomic
+settlement you have composability so maybe the
+issuer built out um you know this this initial Bond
+implementation that doesn't mean that other other communities or other
+organizations couldn't build on top of that once it's out there in the same way
+that there are many groups building out on top of stable coins different use cases
+today these you know at the end of the day are tokens with interfaces that are
+very much programmable in in their own right and extensible and so that example I gave a
+minute ago where a cash token could be implemented by a completely different
+party uh and fit seamlessly in into this
+scenario is very realistic and it's key for all ecosystems going forward still
+with atomic settlement because the rules of the evm world still apply and you
+have kind of the big wow the beauty of um the evm space so I'm actually going
+to pause here and um um maybe just pause on this slide but
+turn it over and welcome Peter one of the the the core
+developers and I may have others on with me and Mark if you could maybe help us
+Mark Peter Jim cherry pick some of the questions and jump into um uh some of
+the Q&A good thing and thanks Steve um Peter's done a great job of tackling a
+lot of these questions in the chat um I'm not surprised one one that couple
+that that remain um really around pente um Peter Bodwell asked for pente privacy
+groups how do different organizations connect to one another is it through the Bas layer or via some other form of
+interoperability protocol and Peter just to jump in as you take the point one
+also if there are themes to the questions or points you want to emphas key points from them you want to call
+out as well please feel free to do that as well yeah that that's great and and
+there has been some really great things in in in the chat around if Paladin
+brings together lots of different tools it comes out of the box with some lots of other privacy Technologies could be
+fitted into Paladin as a runtime to host them and it lets you work together
+between them there was a lot of conversation about well when would I use which tools is is Paladin trying to you
+some new model into the ecosystem absolutely not um so so pente smart
+contracts fit one one piece of the puzzle it's the piece of the only piece of the puzzle Ser solved by Technologies
+like constellation and Tesla in the past um and they solve it and Paladin solves
+it in a new way and what pente does is it says you can have like a little private blockchain and only certain
+people are going to be able to see what happens on the blockchain but an evm blockchain is a world state that moves
+forward so those people can see everything that's happening on on that little blockchain but every transaction
+that happens on that little blockchain umum as you on the chat was calling it a a um a a you know micro
+rollup every transaction that's happening in that little world is validated by maybe those three companies
+of validating that little blockchain um is a single transaction also on the
+underlying blockchain so the answer to Is it one or the other no it's both it's happening up here and it's happening
+here and because it's happening unlike a layer two rollup it's happening one
+transaction at the top one transaction at the bottom that transaction at the bottom is just an evm transaction it can
+be coordinated with anything else that you can do on there privacy preserving tokens Public erc20 public other smart
+contracts and that's really what Paladin is it's about saying we can bring all these models of privy together
+and because evm so infinitely programmable you can actually join them together rather than just having to use
+individual Tools in
+isolation think Steve might be on mute I just going to emphasize these pente
+privacy groups are the lightest lightest weight you know micro blockchains that
+have evm chains that have ever been created right they are orders of Mag
+itude you know lighter weight than you know the the constellations Etc to the
+point where you could call them ephemeral or sort of compare them to these Lambda based ones because a lot of
+what the problems we've seen sort of like the the the fabric world with
+channels is you have this n * m scalability problem once all these things are running that you just sort of
+collap you know everything collapses like how do you manage but this is designed to be so
+lightweight um that you could forget about them forever and you're you're you
+you're not going to break um your system's not going to fall over but equally they're they're still there with
+their full world state so if you like at Lambda if you want to wake them up and and call them and and you want to prove
+to an auditor that that something did happen the state was the case at some point in time they're also always there
+forever as well well it's a very very um very dramatic sort of powerful tool that
+that you could leverage to program
+against perfect thanks and if we've got time for one more we've got a couple minutes left um Jim Mason ask can we
+delegate to thirdparty I am using VCS for
+authorization it's a really great question um the short answer is
+yes um but that's the answer on on anything in evm um
+the the um the model of programming any kind of blockchain is event
+driven um and um what Paladin allows you
+to do is to do that same model that you would do if you were thinking about how do I integrate an oracle for ex example
+a programable Oracle with onchain smart contracts with BVM um Paladin has the
+same model but it lets you do that in a privacy preserving preserving way so
+absolutely you could have um transactions being submitted by that
+party to to validate um uh that the that that it is the case um
+uh um you could also and this is very specific to one feature of Paladin in
+the notorized scenar iio you could have a notary where every transaction is
+being validated offchain um and every transaction that happens for that particular token has to
+be run through a whole bunch of checking that's private to one party offchain um as part of everything that
+happens with a token and we're using the term issuer back in and no notary or notorized
+synonymously synonymously in this case so he's referring to the noo domain
+there and this's a gy um the other gy uh to add to what Peter said uh if you want
+so one one of the sort of core tenant of any blockchain design is every
+transaction must be signed by some party which means it's a pretty different um
+mechanism uh than validating that a party has certain attributes you know in
+the case of verifiable credentials which is about checking for attributes of a
+party and then give authorization that's a quite different mechanism required for
+blockchain transactions to be signed which means you have to have possessions
+of specific private Keys um on the other hand there is opportunities in Paladin
+uh to utilize verifiable credentials in terms of valid
+uh the attributes of the submitter and then you still have to map that to a
+private key which then signs transactions to go on Broad chain so that's a good question for further
+discussions to enhance Paladin to integrate with ver fiable credential based user user
+authentication thanks Jim hey Jim is there any other high level things you wanted to mention
+specifically about the the zto domain uh it's probably got the least amount of airtime and for those who may have been
+familiar with zto it was actually seated to the community maybe six months in
+advance of Paladin itself um it was never intended to be a separate
+project we put that code out there first because there's zero knowledge stuff in
+it and we wanted um the very uh Advanced uh part
+of the community in the Linux Foundation reviewing that code uh and providing feedback on the
+Zero knowledge implementation uh so zto you may have heard of because it's been out longer
+but it was actually all part of the road map and timing for Paladin so zitto does
+sit inside of Paladin as a paladin domain yeah thanks Steve for that shout
+out um yeah I just want to encourage folks to to uh in addition to checking
+out uh Paladin itself also check out the sister uh repository um in L Foundation
+decentralized trust Labs called zitto which is the uh implementation for the
+zitto uh token uh tokens uh it's not one implementation it's a collection of I
+think by now uh about 10 different implementations enforcing different uh
+transaction policies um that we'd love you for you to check
+out and then give us feedback it's gotten feedback from some potential
+customers uh with the global Banks uh including uh central banks as well as uh
+Academia uh to to give us feedback on some of the implementations and
+security um uh uh aspects would love for you to to let us know uh if there are
+additional policies you like to see enforced or uh if there are other use
+cases we need to
+consider awesome well we're at the end of the hour thank you Steve Peter Jim for weighing in here thank you everyone
+for attending especially those with questions in the chat um certainly an awesome discussion we'll make sure that
+everybody gets a recording in the materials after this and happy to schedule any any follow-ups for
+additional questions and Peter any last word on recommendation on how to get
+started yes so so please go to um the the Paladin repository um click the
+documentation in the top right go to quick start within a couple of minutes you should have a pole Paladin and B
+Network running on your laptop and just a shout out there is a Blog um either out or coming extremely soon which will
+give sort of a a description of all of the topics that were um at a high level today and that would be a really good
+way to to sort of go back and um and look through and I did also see that there was requests for all the materials
+so those will be published as well if you want if you want a private briefing ping us uh if you have
+questions uh Peter how how would they connect with the community yes so um if you go to if you
+get as well as the the Paladin GitHub repo um I think we have a quick link on Paladin privacy. org as a way to sort of
+get hold of all the links that you might need so if you get there um it describes the Discord Channel um and and if you so
+if you click that Discord link it invite you into the right Discord server and um drop you into the right channel um and
+put a question on there um and it will get to the right people y so ping us for
+a private briefing to learn more um and then as as I mentioned at one point
+during this uh there is a Road Show going around the world um and some of
+the the major hubs cities for Paladin Hands-On Workshop deep dive day they've
+been really great the last one we did was in New York City um in December City
+Bank was gracious enough to host we had a um a large number of organizations
+kind of come and get their hands on it we'll be doing that we'll be taking it um uh to a number of other cities
+probably later in q1 early Q2 so stay tuned for those dates as as they become
+available and maybe with that I want to thank everyone um for tuning in and wish
+you a pleasant rest of your day and hope you learned something about Paladin let
+us know your feedback on on the presentation today we'll be sending out the materials from here thanks everyone
+
